@@ -1,6 +1,6 @@
-use std::io;
 use rand::rngs::StdRng;
 use rand::{Rng, SeedableRng};
+use std::io;
 
 const START_GOLD: u64 = 100;
 const FOOD_PRICE: u64 = 5;
@@ -50,13 +50,13 @@ fn roll_many(seed: u64, count: u64) -> u64 {
 fn print_status(gold: u64, food: u64, day: u64) {
     println!("Gold: {} | Food: {} | Day: {}", gold, food, day);
 }
-   fn print_menu() {
-       println!("1. Buy food");
-       println!("2. Hunt");
-       println!("3. Trade with caravan");
-       println!("4. View status");
-       println!("5. Quit");
-   }
+fn print_menu() {
+    println!("1. Buy food");
+    println!("2. Hunt");
+    println!("3. Trade with caravan");
+    println!("4. View status");
+    println!("5. Quit");
+}
 fn main() {
     println!("Welcome to Trail Trader!");
     let seed = read_number(1, MAX_SEED);
