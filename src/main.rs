@@ -1,3 +1,4 @@
+use std::io;
 fn can_afford(gold: u64, cost: u64) -> bool {
     gold >= cost
 }
@@ -10,6 +11,22 @@ fn hunt_food(roll: u64) -> u64 {
         20
     } else {
         40
+    }
+}
+fn read_number(min: u64, max: u64) -> u64 {
+    loop {
+        println!("Enter a number from {} to {}:", min, max);
+        let mut input = String::new();
+        let bytes = io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read line");
+        if bytes == 0 {
+            std::process::exit(0);
+        }
+        match input.trim().parse::<u64>() {
+            Ok(n) if n >= min && n <= max => return n,
+            _ => println!("Invalid input. Try again."),
+        }
     }
 }
 fn main() {
