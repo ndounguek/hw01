@@ -42,6 +42,9 @@ fn roll_many(seed: u64, count: u64) -> u64 {
     }
     total
 }
+fn print_status(gold: u64, food: u64, day: u64) {
+    println!("Gold: {} | Food: {} | Day: {}", gold, food, day);
+}
 fn main() {
    fn print_menu() {
        println!("1. Buy food");
