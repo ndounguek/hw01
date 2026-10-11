@@ -1,6 +1,11 @@
 use std::io;
 use rand::rngs::StdRng;
 use rand::{Rng, SeedableRng};
+
+const START_GOLD: u64 = 100;
+const FOOD_PRICE: u64 = 5;
+const MAX_SEED: u64 = 9999;
+
 fn can_afford(gold: u64, cost: u64) -> bool {
     gold >= cost
 }
@@ -45,7 +50,6 @@ fn roll_many(seed: u64, count: u64) -> u64 {
 fn print_status(gold: u64, food: u64, day: u64) {
     println!("Gold: {} | Food: {} | Day: {}", gold, food, day);
 }
-fn main() {
    fn print_menu() {
        println!("1. Buy food");
        println!("2. Hunt");
@@ -53,4 +57,45 @@ fn main() {
        println!("4. View status");
        println!("5. Quit");
    }
+fn main() {
+    println!("Welcome to Trail Trader!");
+    let seed = read_number(1, MAX_SEED);
+    let mut gold: u64 = START_GOLD;
+    let mut food: u64 = 0;
+    let mut day: u64 = 1;
+    let mut roll_count: u64 = 0;
+
+    loop {
+        print_menu();
+        let choice = read_number(1, 5);
+        if choice == 1 {
+            if !can_afford(gold, FOOD_PRICE) {
+                println!("You cannot afford any food.");
+            } else {
+                let max_units = gold / FOOD_PRICE;
+                let units = read_number(1, max_units);
+                gold -= units * FOOD_PRICE;
+                food += units;
+                day += 1;
+            }
+        } else if choice == 2 {
+            let roll = roll_die(seed + roll_count);
+            roll_count += 1;
+            let gained = hunt_food(roll);
+            food += gained;
+            day += 1;
+            println!("You rolled a {} and gained {} food.", roll, gained);
+        } else if choice == 3 {
+            let total = roll_many(seed + roll_count, 3);
+            roll_count += 3;
+            gold += 2 * total;
+            day += 1;
+            println!("The caravan paid you {} gold.", 2 * total);
+        } else if choice == 4 {
+            print_status(gold, food, day);
+        } else {
+            print_status(gold, food, day);
+            break;
+        }
+    }
 }
