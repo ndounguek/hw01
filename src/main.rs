@@ -1,3 +1,6 @@
+fn can_afford(gold: u64, cost: u64) -> bool {
+    gold >= cost
+}
 fn main() {
    fn print_menu() {
        println!("1. Buy food");
